@@ -1,0 +1,1 @@
+Working through the Project Euler questions. Each problem will have a solution in a numbered subdirectory.
