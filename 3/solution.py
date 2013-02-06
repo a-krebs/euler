@@ -2,26 +2,28 @@
 
 import sys
 N = 600851475143
-memo = {1 : 1}
-
-def get_memo(n):
-    return memo[n]
-
-def set_memo(k,v):
-    print "Used set_memo for %s" % k
-    memo[k] = v
+memo = {}
 
 def main(n):
+    """
+    Find the largest prime factor of n.
+
+    N is given as the value of n in the problem.
+    """
     primes = primefactors(n)
-    print primes
+    print primes[-1]
 
 def primefactors(n):
-    factors = set()
+    """
+    Recursively find all the prime factors of n.
+
+    Uses memoization to eliminate duplicate calculations.
+    """
+    factors = []
     primes = []
     try:
-        ret = get_memo(n)
-        print "Used get_memo for %s" % n
-        return ret
+        # memoization case
+        return memo[n]
     except KeyError:
         i = 0
         upper = n+1
@@ -31,21 +33,21 @@ def primefactors(n):
                 continue
             if n%i == 0:
                 upper = n/i
-                factors.add(i)
-                factors.add(n/i)
+                factors.append(i)
+                factors.append(n/i)
+        # base case: n is prime if it has only 2 factors
         if len(factors) == 2:
-            set_memo(n,n)
+            memo[n] = n
             return n
-        factors = list(factors)
         factors.sort()
-        print factors
-        # remove n
+        # remove n to avoid infinite recursion
         factors.pop()
+        # find out which factors of n are prime
         for f in factors:
             subprimes = primefactors(f)
             if isinstance(subprimes, int):
                 primes.append(f)
-        set_memo(n,primes)
+        memo[n] = primes
         return primes
 
 if __name__ == "__main__":
