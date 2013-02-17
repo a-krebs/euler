@@ -14,8 +14,8 @@ int main ( int argc, char *argv[])
 {
 	FILE* file = fopen(argv[1], "r");
 	int* number = calloc(LENGTH, sizeof(int));
-	char consec[CONSEC];
-	int filled = 0;
+	//char consec[CONSEC];
+	//int filled = 0;
 	int c = 0;
 	char cc = '\0';
 	int n = 0;
@@ -28,43 +28,18 @@ int main ( int argc, char *argv[])
 		if(strncmp(&cc, "\n", 1) != 0)
 		{
 			number[n] = atoi(&cc);
-			if((n > 0) && (number[n] == (number[n-1] + 1)))
+			if(n > CONSEC - 1)
 			{
-				if(filled == 0)
+				product = number[n];
+				for(int i = 1; i < CONSEC; i++)
 				{
-					consec[filled] = number[n-1];
-					consec[filled + 1] = number[n];
-					filled += 2;
+					product *= number[n - i];
 				}
-				else
+				if(product > max)
 				{
-					consec[filled] = number[n];
-					filled++;
-				}
-				if(filled == CONSEC)
-				{
-					product = consec[0];
-					for(int i = 1; i < CONSEC; i++)
-					{
-						product *= consec[i];
-					}
-					if(product > max)
-					{
-						max = product;
-					}
-					for(int j = 1; j < CONSEC; j++)
-					{
-						consec[j-1] = consec[j];
-					}
-					filled--;
+					max = product;
 				}
 			}
-			else
-			{
-				filled = 0;
-			}
-
-
 			n++;
 		}
 	}
