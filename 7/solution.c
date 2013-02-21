@@ -16,13 +16,15 @@
 
 int main ( int argc, char *argv[])
 {
-	int num_found = 0;
-	int candidate = 1;
+	int num_found = 1;
+	int candidate = 3;
 	int upper_bound = 0;
 	int i = 1;
 	int* primes;
 
 	primes = calloc(NUM_PRIMES, sizeof(int));
+	// set first prime manually
+	primes[0] = 2;
 	upper_bound = candidate / 2 + 1;
 
 	while(num_found < NUM_PRIMES)
