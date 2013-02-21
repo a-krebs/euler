@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 /* 
  * Project Euler problem 10:
@@ -23,7 +24,7 @@ int main ( int argc, char *argv[])
 	long long int upper_bound = 0;
 	long long int i = 1;
 
-	upper_bound = candidate / 2 + 1;
+	upper_bound = sqrt(candidate);
 
 	while(TRUE)
 	{
@@ -33,12 +34,8 @@ int main ( int argc, char *argv[])
 			if(candidate % i == 0)
 			{
 				candidate += 2;
-				upper_bound = candidate + 1;
+				upper_bound = sqrt(candidate);
 				i = 1;
-			}
-			else
-			{
-				upper_bound = (candidate / i) + 1;
 			}
 		}
 		// candidate is prime
@@ -48,7 +45,7 @@ int main ( int argc, char *argv[])
 		}
 		sum += candidate;
 		candidate += 2;
-		upper_bound = candidate + 1;
+		upper_bound = sqrt(candidate);
 		i = 1;
 	}
 	printf("%lld\n", sum);
