@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "solution.h"
+
+/* 
+ * Project Euler problem 7:
+ * 
+ * By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+ * 
+ * What is the 10 001st prime number?
+ */
 
 #define TRUE 1
 #define FALSE 0
@@ -22,7 +29,6 @@ int main ( int argc, char *argv[])
 	{
 		while(i < upper_bound)
 		{
-			//printf("candidate: %d\ti: %d\tupper_bound: %d\n", candidate, i, upper_bound);
 			i++;
 			if(candidate % i == 0)
 			{
@@ -36,7 +42,6 @@ int main ( int argc, char *argv[])
 			}
 		}
 		// candidate is prime
-		//printf("%d: %d\n", num_found + 1, candidate);
 		primes[num_found] = candidate;
 		num_found++;
 		candidate += 2;
