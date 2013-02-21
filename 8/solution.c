@@ -2,7 +2,15 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include "solution.h"
+
+/*
+ * Project Euler problem 8:
+ * 
+ * Find the greatest product of five consecutive digits in the 1000-digit number.
+ * 
+ * The number is stored in number.txt
+ * Run solution with number.txt as the first argument.
+ */
 
 #define TRUE 1
 #define FALSE 0
@@ -14,8 +22,6 @@ int main ( int argc, char *argv[])
 {
 	FILE* file = fopen(argv[1], "r");
 	int* number = calloc(LENGTH, sizeof(int));
-	//char consec[CONSEC];
-	//int filled = 0;
 	int c = 0;
 	char cc = '\0';
 	int n = 0;
@@ -44,13 +50,5 @@ int main ( int argc, char *argv[])
 		}
 	}
 	printf("%d\n", max);
-	//for(int i = 0; i < LENGTH; i++)
-	//{
-	//	printf("%d", number[i]);
-	//	if((i + 1) % 50 == 0)
-	//	{
-	//		printf("\n");
-	//	}
-	//}
 	free(number);
 }
