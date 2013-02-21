@@ -17,16 +17,12 @@
 
 int main ( int argc, char *argv[])
 {
-	int num_found = 1;
 	long long int candidate = 3;
+	// set 2 as first prime so only odd candidates must be considered
 	long long int sum = 2;
 	long long int upper_bound = 0;
 	long long int i = 1;
-	long long int* primes;
 
-	primes = malloc(ALLOC_INTERVAL * sizeof(long long int));
-	// manually set 2 as first prime so we can check only odd candidates
-	primes[0] = 2;
 	upper_bound = candidate / 2 + 1;
 
 	while(TRUE)
@@ -46,21 +42,14 @@ int main ( int argc, char *argv[])
 			}
 		}
 		// candidate is prime
-		if (num_found % ALLOC_INTERVAL == 0)
-		{
-			primes = realloc(primes, (num_found + ALLOC_INTERVAL) * sizeof(long long int));
-		}
 		if (candidate > MAX)
 		{
 			break;
 		}
-		primes[num_found] = candidate;
-		num_found++;
 		sum += candidate;
 		candidate += 2;
 		upper_bound = candidate + 1;
 		i = 1;
 	}
 	printf("%lld\n", sum);
-	free(primes);
 }
