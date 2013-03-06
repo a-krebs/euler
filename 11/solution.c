@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <string.h>
 
 /* 
  * Project Euler problem 11:
@@ -30,15 +30,26 @@
  *
  * The product of these numbers is 26  63  78  14 = 1788696.
  * 
- * What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 2020 grid?
+ * What is the greatest product of four adjacent numbers in the
+ * same direction (up, down, left, right, or diagonally) in the 2020 grid?
  */
 
 #define TRUE 1
 #define FALSE 0
 
+#define GRID_SIZE 20
+
+struct ProdContainer
+{
+	int forward;
+	int down;
+	int diag_f;
+	int diag_b;
+};
+
 int main ( int argc, char *argv[])
 {
-	int matrix[20][20] = {
+	int matrix[GRID_SIZE][GRID_SIZE] = {
 		{8,2,22,97,38,15,0,40,0,75,4,5,7,78,52,12,50,77,91,8},
 		{49,49,99,40,17,81,18,57,60,87,17,40,98,43,69,48,4,56,62,0},
 		{81,49,31,73,55,79,14,29,93,71,40,67,53,88,30,3,49,13,36,65},
@@ -60,4 +71,55 @@ int main ( int argc, char *argv[])
 		{20,73,35,29,78,31,90,1,74,31,49,71,48,86,81,16,23,57,5,54},
 		{1,70,54,71,83,51,54,69,16,92,33,48,61,43,52,1,89,19,67,48}
 	};
+
+	struct ProdContainer products[GRID_SIZE][GRID_SIZE];
+	memset(products, 0, sizeof(struct ProdContainer) * GRID_SIZE * GRID_SIZE);
+
+	// iterate over each row and column and find the products of the cells they
+	// are adjacent to
+	for (int row = 0; row < GRID_SIZE; row++)
+	{
+		for (int col = 0; col < GRID_SIZE; col++)
+		{
+			// if we're in the last column, there's no forward or diag_f
+			if (col == GRID_SIZE - 1)
+			{
+				products[row][col].forward = matrix[row][col];
+				products[row][col].diag_f = matrix[row][col];
+			}
+			else
+			{
+				products[row][col].forward = matrix[row][col] * matrix[row][col + 1];
+				products[row][col].diag_f = matrix[row][col] * matrix[row + 1][col + 1];
+			}
+			
+			// if we're in the last row, there's no down or diag_b
+			if (row == GRID_SIZE - 1)
+			{
+				products[row][col].diag_b = matrix[row][col];
+				products[row][col].down = matrix[row][col];
+			}
+			else
+			{
+				// if we're in the first column, there's not diag_b
+				if (col == 0)
+				{
+					products[row][col].diag_b = matrix[row][col];
+				}
+				else
+				{
+					products[row][col].diag_b = matrix[row][col] * matrix[row + 1][col - 1];
+				}
+				products[row][col].down = matrix[row][col] * matrix[row + 1][col];
+			}
+		}
+	}
+
+	// do a second sweep over all the cells to get the values for sequences of length 4
+	for (int row = 0; row < GRID_SIZE; row++)
+	{
+		for (int col = 0; col < GRID_SIZE; col++)
+		{
+		}
+	}
 }
