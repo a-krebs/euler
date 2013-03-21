@@ -89,8 +89,16 @@ int main ( int argc, char *argv[])
 			}
 			else
 			{
+				// if we're in the last row, there's no diag_f
+				if (row == GRID_SIZE -1)
+				{
+					products[row][col].diag_f = matrix[row][col];
+				}
+				else 
+				{	
+					products[row][col].diag_f = matrix[row][col] * matrix[row + 1][col + 1];
+				}
 				products[row][col].forward = matrix[row][col] * matrix[row][col + 1];
-				products[row][col].diag_f = matrix[row][col] * matrix[row + 1][col + 1];
 			}
 			
 			// if we're in the last row, there's no down or diag_b
@@ -101,7 +109,7 @@ int main ( int argc, char *argv[])
 			}
 			else
 			{
-				// if we're in the first column, there's not diag_b
+				// if we're in the first column, there's no diag_b
 				if (col == 0)
 				{
 					products[row][col].diag_b = matrix[row][col];
