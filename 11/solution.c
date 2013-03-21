@@ -74,6 +74,8 @@ int main ( int argc, char *argv[])
 
 	struct ProdContainer products[GRID_SIZE][GRID_SIZE];
 	memset(products, 0, sizeof(struct ProdContainer) * GRID_SIZE * GRID_SIZE);
+	
+	int max = 0;
 
 	// iterate over each row and column and find the products of the cells they
 	// are adjacent to
@@ -128,6 +130,48 @@ int main ( int argc, char *argv[])
 	{
 		for (int col = 0; col < GRID_SIZE; col++)
 		{
+			// if we're in the last 3 columns, there's no product
+			if (col < GRID_SIZE - 3)
+			{
+				products[row][col].forward *= products[row][col + 2].forward;
+			}
+			
+			// if we're in the last 3 rows, there's no product
+			if (row < GRID_SIZE - 3)
+			{
+				products[row][col].down *= products[row + 2][col].down;
+				
+				// if we're in the first three columns, there's no diag_b
+				if (col > 2)
+				{
+					products[row][col].diag_b *= products[row + 2][col - 2].diag_b;
+				}
+				
+				// if we're in the last 3 columns, there's no diag_f
+				if (row < GRID_SIZE - 3)
+				{
+					products[row][col].diag_f *= products[row + 2][col + 2].diag_f;
+				}
+			}
+			
+			// check if we have a new max
+			if (products[row][col].forward > max)
+			{
+				max = products[row][col].forward;
+			}
+			if (products[row][col].down > max)
+			{
+				max = products[row][col].down;
+			}
+			if (products[row][col].diag_f > max)
+			{
+				max = products[row][col].diag_f;
+			}
+			if (products[row][col].diag_b > max)
+			{
+				max = products[row][col].diag_b;
+			}
 		}
 	}
+	printf("%d\n", max);
 }
