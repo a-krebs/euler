@@ -8,6 +8,24 @@
 
 #define DIGITS 50
 #define NUMBERS 100
+#define PRINT_DIGITS 10
+
+struct digit {
+	int digit;
+	struct digit * next;
+	struct digit * previous;
+};
+
+void showDigits(struct digit * ptr)
+{
+	struct digit * head = ptr;
+	for (int f = 0; f < PRINT_DIGITS; f++)
+	{
+		printf("%d", head->digit);
+		head = head->next;
+	}
+	printf("\n");
+}
 
 int main(int argc, char *argv[])
 {
@@ -116,28 +134,49 @@ int main(int argc, char *argv[])
 
 	int carryover = 0;
 	int sum = 0;
-	struct digit {
-		int digit;
-		struct digit *;
-	}
-	struct digit * head;
+	struct digit * head = calloc(1, sizeof(struct digit));
+	struct digit * tail = head;
+	struct digit * current = NULL;
 
 	// initialize linked list
-	for (int i = 10; i > 0; i++)
+	for (int i = 0; i < PRINT_DIGITS - 1; i++)
 	{
+		current = calloc(1, sizeof(struct digit));
+		current->previous = tail;
+		tail->next = current;
+		tail = current;
+		
 	}
-
-
+	head->previous = tail;
+	tail->next = head;
 
 	for (int n = NUMBERS - 1; n >= 0; n--)
 	{
-		for (int d = DIGITS = 1; d >= 0; d--)
+		sum = 0;
+		for (int d = DIGITS - 1; d >= 0; d--)
 		{
 			sum += matrix[n][d];
 		}
 		sum += carryover;
 		if (sum > 10) {
 			carryover = sum / 10;
+		} else {
+			carryover = 0;
 		}
+		printf("Sum: %d\n", sum);
+		current = head;
+		head = head->previous;
+		while (TRUE)
+		{
+			current->digit = sum % 10;
+			sum /= 10;
+			current = current->previous;
+			if (sum == 0)
+			{
+				break;
+			}
+		}
+		showDigits(current->next);
 	}
 }
+
