@@ -6,9 +6,9 @@
 #define TRUE 1
 #define FALSE 0
 
-#define DIGITS 50
-#define NUMBERS 100
-#define PRINT_DIGITS 10
+#define DIGITS 5
+#define NUMBERS 3
+#define PRINT_DIGITS 3
 
 struct digit {
 	int digit;
@@ -29,6 +29,7 @@ void showDigits(struct digit * ptr)
 
 int main(int argc, char *argv[])
 {
+	/*
 	int matrix[NUMBERS][DIGITS] = {	
 		{3,7,1,0,7,2,8,7,5,3,3,9,0,2,1,0,2,7,9,8,7,9,7,9,9,8,2,2,0,8,3,7,5,9,0,2,4,6,5,1,0,1,3,5,7,4,0,2,5,0},
 		{4,6,3,7,6,9,3,7,6,7,7,4,9,0,0,0,9,7,1,2,6,4,8,1,2,4,8,9,6,9,7,0,0,7,8,0,5,0,4,1,7,0,1,8,2,6,0,5,3,8},
@@ -131,6 +132,12 @@ int main(int argc, char *argv[])
 		{2,0,8,4,9,6,0,3,9,8,0,1,3,4,0,0,1,7,2,3,9,3,0,6,7,1,6,6,6,8,2,3,5,5,5,2,4,5,2,5,2,8,0,4,6,0,9,7,2,2},
 		{5,3,5,0,3,5,3,4,2,2,6,4,7,2,5,2,4,2,5,0,8,7,4,0,5,4,0,7,5,5,9,1,7,8,9,7,8,1,2,6,4,3,3,0,3,3,1,6,9,0},
 	};
+	*/
+	int matrix[NUMBERS][DIGITS] = {
+		{1,2,3,4,5},
+		{1,2,3,4,5},
+		{1,2,3,4,5},
+	};
 
 	int carryover = 0;
 	int sum = 0;
@@ -150,15 +157,15 @@ int main(int argc, char *argv[])
 	head->previous = tail;
 	tail->next = head;
 
-	for (int n = NUMBERS - 1; n >= 0; n--)
+	for (int d = DIGITS - 1; d >= 0; d--)
 	{
 		sum = 0;
-		for (int d = DIGITS - 1; d >= 0; d--)
+		for (int n = NUMBERS - 1; n >= 0; n--)
 		{
 			sum += matrix[n][d];
 		}
 		sum += carryover;
-		if (sum > 10) {
+		if (sum >= 10) {
 			carryover = sum / 10;
 		} else {
 			carryover = 0;
